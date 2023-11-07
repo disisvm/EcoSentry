@@ -1,8 +1,10 @@
 import cv2
 import os
 
+import numpy as np
 
-def resize_and_adjust_contrast(input_directory, output_directory, target_size):
+
+def image_enhancements(input_directory, output_directory, target_size):
     """
     Resize images in a directory and adjust contrast.
 
@@ -27,6 +29,13 @@ def resize_and_adjust_contrast(input_directory, output_directory, target_size):
 
         # Resize image
         resized_image = cv2.resize(image, target_size)
+
+        # Perform noise reduction
+        denoised_image = cv2.fastNlMeansDenoisingColored(image, None, 10, 10, 7, 21)
+
+        # Perform sharpening
+        kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])  # Sharpening kernel
+        sharpened_image = cv2.filter2D(denoised_image, -1, kernel)
 
         # Perform contrast adjustment
         lab = cv2.cvtColor(resized_image, cv2.COLOR_BGR2LAB)
