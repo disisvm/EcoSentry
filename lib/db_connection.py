@@ -31,3 +31,5 @@ metadata = {
 insert_query = "INSERT INTO metadata (filename, timestamp, user_id) VALUES (%s, %s, %s)"
 values = (metadata['filename'], metadata['timestamp'], metadata['user_id'])
 print(values)
+
+#dsgdsg
