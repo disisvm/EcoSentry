@@ -26,8 +26,12 @@ metadata = {
     'timestamp': '2023-11-07 18:34:00',
     'user_id': 123
 }
+#create_query = "create table metadata(filename varchar(100), timestamp datetime, user_id varchar(25))"
+#cursor.execute(create_query)
 
 insert_query = "INSERT INTO metadata (filename, timestamp, user_id) VALUES (%s, %s, %s)"
 values = (metadata['filename'], metadata['timestamp'], metadata['user_id'])
-print(values)
+cursor.execute(insert_query, values)
+#print(values)
 conn.commit()
+conn.close()
