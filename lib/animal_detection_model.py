@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 # re-size all the images to this
 IMAGE_SIZE = [224, 224]
 
-train_path = r'C:\Users\likhi\OneDrive\Documents\BigData\3014-AI\Image Classification Project\animals'
+train_path = r'../src/animals'
 valid_path = r'C:\Users\likhi\OneDrive\Documents\BigData\3014-AI\Image Classification Project\Test'
 
 # add preprocessing layer to the front of VGG

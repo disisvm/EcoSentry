@@ -49,11 +49,13 @@ def image_enhancements(input_directory, output_directory, target_size):
         output_path = os.path.join(output_directory, image_file)
         cv2.imwrite(output_path, contrast_adjusted_image)
 
+
 '''
-# Sample Usage
+-----Sample Usage-----
+
 input_dir = 'input_images/'
 output_dir = 'processed_images/'
 target_size = (800, 600)  # Set your desired dimensions
 
-resize_and_adjust_contrast(input_dir, output_dir, target_size)
+image_enhancements(input_dir, output_dir, target_size)
 '''
