@@ -4,6 +4,15 @@ import pandas as pd
 from PIL import Image
 import zipfile
 from io import BytesIO
+import tkinter as tk
+from tkinter import filedialog
+
+# Set up tkinter
+root = tk.Tk()
+root.withdraw()
+
+# Make folder picker dialog appear on top of other windows
+root.wm_attributes('-topmost', 1)
 
 # Function to process images in the selected directory
 def process_images(directory_path):
@@ -44,17 +53,21 @@ def download_zip(result):
 def main():
     st.title("EcoSentry App")
 
-    # Select a directory dynamically
-    uploaded_folder = st.sidebar.file_uploader("Choose a directory:")
+    # Folder picker button
+    st.write('Please select a folder:')
+    clicked = st.button('Folder Picker')
 
-    # Display the selected directory
-    if uploaded_folder is not None:
-        image_directory = BytesIO(uploaded_folder.read()).decode("utf-8").strip()
-        st.sidebar.success(f"Selected directory: {image_directory}")
-    else:
-        st.sidebar.warning("Please select a directory.")
+    if clicked:
+        st.info("Please upload a file from the desired folder.")
+        uploaded_file = st.file_uploader("Upload a file:", type=["jpg", "jpeg", "png", "txt"])
 
-    # Process images on button click
+        if uploaded_file is not None:
+            folder_path = os.path.dirname(uploaded_file.name)
+            st.success(f"Selected folder: {folder_path}")
+        else:
+            st.warning("Please upload a file to identify the folder.")
+
+    '''# Process images on button click
     if st.sidebar.button("Process Images"):
         if uploaded_folder is not None:
             result = process_images(image_directory)
@@ -72,7 +85,7 @@ def main():
                 st.write(f"Filename: {item['filename']}")
                 st.write(f"Class Identified: {item['class']}")
                 st.write(f"Confidence: {item['confidence']}")
-                st.write("---")
+                st.write("---")'''
 
     # Display graphs (replace with your actual graph generation code)
     st.header("Graphs")
