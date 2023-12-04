@@ -6,12 +6,12 @@ import zipfile
 from io import BytesIO
 
 # Function to process images in the selected directory
-def process_images(directory_path):
+def process_images(file_list):
     # Your image processing logic here
     # Replace the following example code with your actual processing logic
     result = []
-    for filename in os.listdir(directory_path):
-        img_path = os.path.join(directory_path, filename)
+    for uploaded_file in file_list:
+        img_path = BytesIO(uploaded_file.read())
         # Replace this with your actual function that processes an image
         processed_result = process_single_image(img_path)
         result.append(processed_result)
@@ -22,7 +22,7 @@ def process_single_image(image_path):
     # Your image processing logic here
     # Replace the following example code with your actual processing logic
     return {
-        'filename': os.path.basename(image_path),
+        'filename': "example.jpg",  # Replace with the actual filename
         'class': 'Animal',  # Replace with the actual class identified
         'confidence': 0.85   # Replace with the actual confidence score
     }
@@ -44,24 +44,19 @@ def download_zip(result):
 def main():
     st.title("EcoSentry App")
 
-    # Select a directory dynamically
-    uploaded_files = st.sidebar.file_uploader(
-        "Choose multiple files in the directory:",
-        type=["jpg", "jpeg", "png"],
-        accept_multiple_files=True
-    )
-
-    # Extract directory from the first uploaded file (assuming all files are in the same directory)
+    # Upload multiple files
+    uploaded_files = st.sidebar.file_uploader("Choose multiple files:", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
+    
+    # Display the list of selected files
     if uploaded_files:
-        image_directory = os.path.dirname(uploaded_files[0].name)
-        st.sidebar.success(f"Selected directory: {image_directory}")
-    else:
-        st.sidebar.warning("Please select multiple files in the directory.")
+        st.sidebar.success("Selected files:")
+        for file in uploaded_files:
+            st.sidebar.write(file.name)
 
     # Process images on button click
     if st.sidebar.button("Process Images"):
         if uploaded_files:
-            result = process_images(image_directory)
+            result = process_images(uploaded_files)
             st.sidebar.success("Image processing completed!")
 
             # Download results as a zip file
