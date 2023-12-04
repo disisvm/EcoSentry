@@ -45,23 +45,17 @@ def main():
     st.title("EcoSentry App")
 
     # Upload multiple files
-    uploaded_files = st.sidebar.file_uploader("Choose multiple files:", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
-    
-    # Display the list of selected files
-    if uploaded_files:
-        st.sidebar.success("Selected files:")
-        for file in uploaded_files:
-            st.sidebar.write(file.name)
+    uploaded_files = st.file_uploader("Choose multiple files:", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
 
     # Process images on button click
-    if st.sidebar.button("Process Images"):
+    if st.button("Process Images"):
         if uploaded_files:
             result = process_images(uploaded_files)
-            st.sidebar.success("Image processing completed!")
+            st.success("Image processing completed!")
 
             # Download results as a zip file
             zip_buffer = download_zip(result)
-            st.sidebar.markdown(
+            st.markdown(
                 f"### [Download Results as Zip File](data:application/zip;base64,{zip_buffer.read().encode('base64')})"
             )
 
@@ -78,17 +72,17 @@ def main():
     # Your graph generation code here
 
     # Report section with filters and download button
-    st.header("Reports")
-    start_date = st.date_input("Start Date")
-    end_date = st.date_input("End Date")
+    st.sidebar.header("Reports")
+    start_date = st.sidebar.date_input("Start Date")
+    end_date = st.sidebar.date_input("End Date")
 
     # Filtered reports (replace with your actual report generation code)
     filtered_reports = []  # Replace with your actual filtered report data
 
     # Download button for reports
-    if st.button("Download Reports"):
+    if st.sidebar.button("Download Reports"):
         # Your report download logic here
-        st.success("Reports downloaded successfully!")
+        st.sidebar.success("Reports downloaded successfully!")
 
 # Run the Streamlit app
 if __name__ == "__main__":
