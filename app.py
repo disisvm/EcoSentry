@@ -4,15 +4,6 @@ import pandas as pd
 from PIL import Image
 import zipfile
 from io import BytesIO
-import tkinter as tk
-from tkinter import filedialog
-
-# Set up tkinter
-root = tk.Tk()
-root.withdraw()
-
-# Make folder picker dialog appear on top of other windows
-root.wm_attributes('-topmost', 1)
 
 # Function to process images in the selected directory
 def process_images(directory_path):
@@ -53,23 +44,23 @@ def download_zip(result):
 def main():
     st.title("EcoSentry App")
 
-    # Folder picker button
-    st.write('Please select a folder:')
-    clicked = st.button('Folder Picker')
+    # Select a directory dynamically
+    uploaded_files = st.sidebar.file_uploader(
+        "Choose multiple files in the directory:",
+        type=["jpg", "jpeg", "png"],
+        accept_multiple_files=True
+    )
 
-    if clicked:
-        st.info("Please upload a file from the desired folder.")
-        uploaded_file = st.file_uploader("Upload a file:", type=["jpg", "jpeg", "png", "txt"])
+    # Extract directory from the first uploaded file (assuming all files are in the same directory)
+    if uploaded_files:
+        image_directory = os.path.dirname(uploaded_files[0].name)
+        st.sidebar.success(f"Selected directory: {image_directory}")
+    else:
+        st.sidebar.warning("Please select multiple files in the directory.")
 
-        if uploaded_file is not None:
-            folder_path = os.path.dirname(uploaded_file.name)
-            st.success(f"Selected folder: {folder_path}")
-        else:
-            st.warning("Please upload a file to identify the folder.")
-
-    '''# Process images on button click
+    # Process images on button click
     if st.sidebar.button("Process Images"):
-        if uploaded_folder is not None:
+        if uploaded_files:
             result = process_images(image_directory)
             st.sidebar.success("Image processing completed!")
 
@@ -85,7 +76,7 @@ def main():
                 st.write(f"Filename: {item['filename']}")
                 st.write(f"Class Identified: {item['class']}")
                 st.write(f"Confidence: {item['confidence']}")
-                st.write("---")'''
+                st.write("---")
 
     # Display graphs (replace with your actual graph generation code)
     st.header("Graphs")
