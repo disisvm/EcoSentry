@@ -45,7 +45,7 @@ def main():
     st.title("EcoSentry App")
 
     # Select a directory dynamically
-    uploaded_folder = st.sidebar.file_uploader("Choose a directory:", type=["folder"])
+    uploaded_folder = st.sidebar.file_uploader("Choose a directory:", type=["File Folder"])
 
     # Display the selected directory
     if uploaded_folder is not None:
