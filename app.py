@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import pandas as pd
 from PIL import Image
 import zipfile
 from io import BytesIO
@@ -41,15 +42,14 @@ def download_zip(result):
 
 # Streamlit app
 def main():
-    st.title("Animal Image Processing App")
+    st.title("EcoSentry App")
 
-    # Sidebar - Select directory with images
-    st.sidebar.header("Select Image Directory")
-    uploaded_folder = st.sidebar.file_uploader("Choose a directory:")
+    # Select a directory dynamically
+    uploaded_folder = st.sidebar.file_uploader("Choose a directory:", type=["folder"])
 
-    # Display the path of the selected directory
+    # Display the selected directory
     if uploaded_folder is not None:
-        image_directory = os.path.abspath(uploaded_folder)
+        image_directory = BytesIO(uploaded_folder.read()).decode("utf-8").strip()
         st.sidebar.success(f"Selected directory: {image_directory}")
     else:
         st.sidebar.warning("Please select a directory.")
