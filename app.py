@@ -4,7 +4,6 @@ from PIL import Image
 import zipfile
 from io import BytesIO
 
-
 # Function to process images in the selected directory
 def process_images(directory_path):
     # Your image processing logic here
@@ -17,7 +16,6 @@ def process_images(directory_path):
         result.append(processed_result)
     return result
 
-
 # Function to process a single image (replace with your actual logic)
 def process_single_image(image_path):
     # Your image processing logic here
@@ -25,9 +23,8 @@ def process_single_image(image_path):
     return {
         'filename': os.path.basename(image_path),
         'class': 'Animal',  # Replace with the actual class identified
-        'confidence': 0.85  # Replace with the actual confidence score
+        'confidence': 0.85   # Replace with the actual confidence score
     }
-
 
 # Function to generate and download a zip file
 def download_zip(result):
@@ -42,33 +39,40 @@ def download_zip(result):
     zip_buffer.seek(0)
     return zip_buffer
 
-
 # Streamlit app
 def main():
     st.title("Animal Image Processing App")
 
     # Sidebar - Select directory with images
     st.sidebar.header("Select Image Directory")
-    image_directory = st.sidebar.selectbox("Choose a directory:", os.listdir('/path/to/root/folder/'))
+    uploaded_folder = st.sidebar.file_uploader("Choose a directory:")
+
+    # Display the path of the selected directory
+    if uploaded_folder is not None:
+        image_directory = os.path.abspath(uploaded_folder)
+        st.sidebar.success(f"Selected directory: {image_directory}")
+    else:
+        st.sidebar.warning("Please select a directory.")
 
     # Process images on button click
     if st.sidebar.button("Process Images"):
-        result = process_images(image_directory)
-        st.sidebar.success("Image processing completed!")
+        if uploaded_folder is not None:
+            result = process_images(image_directory)
+            st.sidebar.success("Image processing completed!")
 
-        # Download results as a zip file
-        zip_buffer = download_zip(result)
-        st.sidebar.markdown(
-            f"### [Download Results as Zip File](data:application/zip;base64,{zip_buffer.read().encode('base64')})"
-        )
+            # Download results as a zip file
+            zip_buffer = download_zip(result)
+            st.sidebar.markdown(
+                f"### [Download Results as Zip File](data:application/zip;base64,{zip_buffer.read().encode('base64')})"
+            )
 
-        # Display results
-        st.header("Image Processing Results")
-        for item in result:
-            st.write(f"Filename: {item['filename']}")
-            st.write(f"Class Identified: {item['class']}")
-            st.write(f"Confidence: {item['confidence']}")
-            st.write("---")
+            # Display results
+            st.header("Image Processing Results")
+            for item in result:
+                st.write(f"Filename: {item['filename']}")
+                st.write(f"Class Identified: {item['class']}")
+                st.write(f"Confidence: {item['confidence']}")
+                st.write("---")
 
     # Display graphs (replace with your actual graph generation code)
     st.header("Graphs")
@@ -87,8 +91,6 @@ def main():
         # Your report download logic here
         st.success("Reports downloaded successfully!")
 
-
 # Run the Streamlit app
 if __name__ == "__main__":
     main()
-
