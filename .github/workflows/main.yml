@@ -18,8 +18,15 @@ jobs:
         run: |
           git config --global http.postBuffer 524288000
           git config --global http.timeout 600
+
+      - name: Split Changes
+        run: |
+          git diff-tree --no-commit-id --name-only -r ${{ github.sha }} > changed_files.txt
+          python import_subprocess.py  # Run a script to split changes
+
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git push https://counito:$HF_TOKEN@huggingface.co/spaces/counito/EcoSentry main
+          git push --force https://HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/counito/EcoSentry main
+
