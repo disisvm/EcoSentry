@@ -108,6 +108,6 @@ if best_model is not None:
     print(f"Best Model Validation Accuracy: {evaluation[1]}")
 
     # Save the best model
-    best_model.save("Best_MobileNetV2_model.h5")
+    best_model.save("MobileNetV2_model.h5")
 else:
     print("No best model found.")
