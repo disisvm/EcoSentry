@@ -22,4 +22,4 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git push --force https://HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/counito/EcoSentry main
+          git push --force https://counito:$HF_TOKEN@huggingface.co/spaces/counito/EcoSentry main
