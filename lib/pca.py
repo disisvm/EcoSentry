@@ -11,6 +11,7 @@ from tensorflow.keras.preprocessing.image import img_to_array, load_img
 # Import image enhancement function
 import image_enhancements as enhancement
 
+
 # Function to load and preprocess data
 def load_and_preprocess_data(parent_dir, target_size=(224, 224)):
     labels = []
